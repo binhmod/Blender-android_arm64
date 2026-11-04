@@ -384,9 +384,7 @@ endif()
 # Build makesrna executable
 add_cc_flags_custom_test(makesrna)
 
-#add_executable(makesrna ${SRC} ${SRC_RNA_INC} ${SRC_DNA_INC})
-
-add_library(makesrna STATIC
+add_executable(makesrna
         ${SRC})
 setup_platform_linker_flags(makesrna)
 blender_target_include_dirs(makesrna ${INC})

@@ -84,11 +84,12 @@ jobs:
           SYSROOT_LIB="$HOME/${NDK_VERSION}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28"
           MD_BIN=build/source/blender/makesdna/makesdna
           ls -l "$MD_BIN"
-          mkdir -p /tmp/mkdna
+          mkdir -p /tmp/mkdna build/source/blender/makesdna/intern
           qemu-aarch64 -L "$SYSROOT_LIB" "$MD_BIN" \
             /tmp/mkdna/dna.c /tmp/mkdna/dna_type_offsets.h /tmp/mkdna/dna_verify.c \
             "$GITHUB_WORKSPACE/Blender-android_arm64/source/blender/makesdna/"
-          ls -lh /tmp/mkdna
+          cp /tmp/mkdna/* build/source/blender/makesdna/intern/
+          ls -lh /tmp/mkdna build/source/blender/makesdna/intern
 
       - name: Build makesrna (arm64)
         id: build_makesrna
@@ -105,11 +106,10 @@ jobs:
           SYSROOT_LIB="$HOME/${NDK_VERSION}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28"
           MR_BIN=build/source/blender/makesrna/makesrna
           ls -l "$MR_BIN"
-          mkdir -p /tmp/mkrna
-          cd /tmp/mkrna
-          qemu-aarch64 -L "$SYSROOT_LIB" "$GITHUB_WORKSPACE/build/source/blender/makesrna/makesrna" \
-            /tmp/mkrna/ /tmp/mkrna/
-          ls -lh /tmp/mkrna
+          mkdir -p build/source/blender/makesrna/intern
+          qemu-aarch64 -L "$SYSROOT_LIB" "$MR_BIN" \
+            build/source/blender/makesrna/intern build/source/blender/makesrna
+          ls -lh build/source/blender/makesrna/intern build/source/blender/makesrna | head -30
 
       - name: Upload logs & artifacts
         if: always()
@@ -121,8 +121,9 @@ jobs:
             build_makesdna.log
             build_makesrna.log
             build/CMakeFiles/CMakeError.log
-            /tmp/mkdna/*
-            /tmp/mkrna/*
+            build/source/blender/makesdna/intern/dna.c
+            build/source/blender/makesdna/intern/dna_verify.c
+            build/source/blender/makesrna/intern/*.h
           if-no-files-found: ignore
 
       - name: Upload build directory (cache for next milestone)
