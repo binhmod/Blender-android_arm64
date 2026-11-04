@@ -1,0 +1,75 @@
+name: Native build probe (libblender.so)
+
+# Goal: cross-compile Blender 3.6 Android port from source so we can patch the
+# engine natively (multitask fix, GLES optimizations) instead of relying on
+# the prebuilt libblender.so extracted from upstream release APK.
+#
+# Author layout requirement:
+#   BLENDER_MOBILE_DIR/  <- defined as workspace root
+#     Blender-android_arm64/  (this checkout)
+#     lib-android_arm64/      (prebuilt third-party deps)
+#
+# NOTE: first iterations are single-run CONFIGURE PROBES. Confirmed working
+# build will be split into separate cached jobs later.
+
+on:
+  push:
+    branches: [ opt/native-build ]
+  workflow_dispatch:
+
+env:
+  NDK_VERSION: android-ndk-r21e  # NDK 21.4.7075529 used by the author
+
+jobs:
+  native-configure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Blender source
+        uses: actions/checkout@v4
+        with:
+          path: Blender-android_arm64
+
+      - name: Checkout lib-android_arm64 (third-party prebuilt deps)
+        uses: actions/checkout@v4
+        with:
+          repository: binhmod/lib-android_arm64
+          ref: main
+          path: lib-android_arm64
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+          ninja --version
+
+      - name: Download NDK r21e
+        run: |
+          if [ ! -d "$HOME/${NDK_VERSION}" ]; then
+            curl -sSL -o /tmp/ndk.zip https://dl.google.com/android/repository/${NDK_VERSION}-linux-x86_64.zip
+            unzip -q /tmp/ndk.zip -d "$HOME"
+            rm /tmp/ndk.zip
+          fi
+          ls "$HOME/${NDK_VERSION}" | head
+
+      - name: Configure (cross arm64-v8a)
+        id: configure
+        run: |
+          cmake \
+            -G Ninja \
+            -B build \
+            -S Blender-android_arm64 \
+            -DBLENDER_MOBILE_DIR="$GITHUB_WORKSPACE" \
+            -DCMAKE_TOOLCHAIN_FILE="$HOME/${NDK_VERSION}/build/cmake/android.toolchain.cmake" \
+            -DANDROID_ABI=arm64-v8a \
+            -DANDROID_PLATFORM=android-28 \
+            -DCMAKE_BUILD_TYPE=Release 2>&1 | tee configure.log
+
+      - name: Upload configure log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: configure-log
+          path: |
+            configure.log
+            build/CMakeFiles/CMakeError.log
+          if-no-files-found: ignore
