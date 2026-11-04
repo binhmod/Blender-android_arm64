@@ -87,6 +87,8 @@ jobs:
             dna_out/dna.c dna_out/dna_type_offsets.h dna_out/dna_verify.c \
             "$GITHUB_WORKSPACE/Blender-android_arm64/source/blender/makesdna/"
           cp dna_out/* build/source/blender/makesdna/intern/
+          mkdir -p build_host/source/blender/makesdna/intern
+          cp dna_out/* build_host/source/blender/makesdna/intern/
           ls -lh dna_out build/source/blender/makesdna/intern
 
       - name: Host build makesrna
