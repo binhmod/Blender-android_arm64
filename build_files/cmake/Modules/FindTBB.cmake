@@ -59,11 +59,11 @@
 #  TBB_INCLUDE_DIR
 #  TBB_LIBRARY
 SET(TBB_FOUND TRUE)
-SET(TBB_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/Tbb/include/tbb-master/include)
-SET(TBB_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/Tbb/include/tbb-master/include)
+SET(TBB_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/Tbb/include/tbb-master/include)
+SET(TBB_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/Tbb/include/tbb-master/include)
 SET(TBB_LIBRARIES
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/Tbb/lib/libtbb.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/Tbb/lib/libtbbmalloc.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/Tbb/lib/libtbbmalloc_proxy.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/Tbb/lib/libtbb.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/Tbb/lib/libtbbmalloc.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/Tbb/lib/libtbbmalloc_proxy.so
         android
         )

@@ -59,8 +59,8 @@
 #  PCRE_INCLUDE_DIR
 #  PCRE_LIBRARY
 #)
-SET(PCRE_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/Externals/pcre/include/)
-SET(PCRE_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libpcre.so)
-SET(PCRE_ROOT_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/Externals/pcre/include/)
+SET(PCRE_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/Externals/pcre/include/)
+SET(PCRE_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libpcre.so)
+SET(PCRE_ROOT_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/Externals/pcre/include/)
 SET(PCRE_FOUND ON)
-SET(PCRE_LIBRARY D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libpcre.so)
+SET(PCRE_LIBRARY ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libpcre.so)

@@ -59,8 +59,8 @@
 #  PUGIXML_INCLUDE_DIR
 #  PUGIXML_LIBRARY
 #)
-SET(PUGIXML_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/PugiXML/include/pugixml-master/src/)
-SET(PUGIXML_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/PugiXML/include/pugixml-master/src/)
-SET(PUGIXML_ROOT_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/PugiXML/include/pugixml-master/src/)
+SET(PUGIXML_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/PugiXML/include/pugixml-master/src/)
+SET(PUGIXML_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/PugiXML/include/pugixml-master/src/)
+SET(PUGIXML_ROOT_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/PugiXML/include/pugixml-master/src/)
 SET(PUGIXML_FOUND ON)
-SET(PUGIXML_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/PugiXML/lib/libpugixml.a)
+SET(PUGIXML_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/PugiXML/lib/libpugixml.a)

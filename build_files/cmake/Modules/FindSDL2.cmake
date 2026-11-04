@@ -55,9 +55,9 @@
 #  SDL2_INCLUDE_DIR
 #  SDL2_LIBRARY
 #)
-SET(SDL2_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/SDL/include/SDL2-2.30.10/include/)
-SET(SDL2_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/SDL/include/SDL2-2.30.10/include/)
-SET(SDL2_ROOT_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/SDL/include/SDL2-2.30.10/include/)
-SET(SDL2_LIBRARY D:/FreeProjects/Blender/Blender/lib-android_arm64/SDL/lib/libSDL2.so OpenSLES GLESv3 GLESv2 GLESv1_CM EGL log)
-SET(SDL2_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/SDL/lib/libSDL2.so OpenSLES GLESv3 GLESv2 GLESv1_CM EGL log)
+SET(SDL2_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/SDL/include/SDL2-2.30.10/include/)
+SET(SDL2_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/SDL/include/SDL2-2.30.10/include/)
+SET(SDL2_ROOT_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/SDL/include/SDL2-2.30.10/include/)
+SET(SDL2_LIBRARY ${BLENDER_MOBILE_DIR}/lib-android_arm64/SDL/lib/libSDL2.so OpenSLES GLESv3 GLESv2 GLESv1_CM EGL log)
+SET(SDL2_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/SDL/lib/libSDL2.so OpenSLES GLESv3 GLESv2 GLESv1_CM EGL log)
 SET(SDL2_FOUND ON)

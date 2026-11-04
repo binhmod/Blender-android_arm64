@@ -29,8 +29,8 @@
 #  # Needed for `MESON`.
 #  external_python_site_packages
 #)
-SET(Epoxy_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/Epoxy/include/)
-SET(Epoxy_LIBRARY D:/FreeProjects/Blender/Blender/lib-android_arm64/Epoxy/lib/libepoxy.a)
-SET(Epoxy_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/Epoxy/lib/libepoxy.a)
-SET(Epoxy_ROOT_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/Epoxy/include/)
+SET(Epoxy_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/Epoxy/include/)
+SET(Epoxy_LIBRARY ${BLENDER_MOBILE_DIR}/lib-android_arm64/Epoxy/lib/libepoxy.a)
+SET(Epoxy_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/Epoxy/lib/libepoxy.a)
+SET(Epoxy_ROOT_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/Epoxy/include/)
 SET(Epoxy_FOUND ON)

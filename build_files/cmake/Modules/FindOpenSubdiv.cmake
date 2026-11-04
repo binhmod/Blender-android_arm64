@@ -77,13 +77,13 @@
 #  OPENSUBDIV_INCLUDE_DIR
 #
 set(OPENSUBDIV_FOUND ON)
-set(OPENSUBDIV_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenSubdiv/include/OpenSubdiv-3_4_3/)
-set(OPENSUBDIV_INCLUDE_DIR  D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenSubdiv/include/OpenSubdiv-3_4_3/)
+set(OPENSUBDIV_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenSubdiv/include/OpenSubdiv-3_4_3/)
+set(OPENSUBDIV_INCLUDE_DIR  ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenSubdiv/include/OpenSubdiv-3_4_3/)
 set(OPENSUBDIV_LIBRARIES
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenSubdiv/lib/libosdCPU.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenSubdiv/lib/libosdGPU.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenSubdiv/lib/libosdCPU.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenSubdiv/lib/libosdGPU.so
         )
 SET(_opensubdiv_LIBRARIES
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenSubdiv/lib/libosdCPU.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenSubdiv/lib/libosdGPU.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenSubdiv/lib/libosdCPU.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenSubdiv/lib/libosdGPU.so
         )

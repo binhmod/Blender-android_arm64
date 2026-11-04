@@ -97,10 +97,10 @@
 #UNSET(_opencolorio_FIND_COMPONENTS)
 #UNSET(_opencolorio_LIBRARIES)
 #UNSET(_opencolorio_SEARCH_DIRS)
-SET(OPENCOLORIO_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenColorIO/include/)
-SET(OPENCOLORIO_ROOT_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenColorIO/include/)
+SET(OPENCOLORIO_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenColorIO/include/)
+SET(OPENCOLORIO_ROOT_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenColorIO/include/)
 SET(OPENCOLORIO_LIBRARIES
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenColorIO/lib/libOpenColorIO.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/Expat/lib/libexpat.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/IMath/lib/libImath-3_0.so)
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenColorIO/lib/libOpenColorIO.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/Expat/lib/libexpat.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/IMath/lib/libImath-3_0.so)
 SET(OPENCOLORIO_FOUND ON)

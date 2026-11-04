@@ -59,8 +59,8 @@
 #  POTRACE_INCLUDE_DIR
 #  POTRACE_LIBRARY
 #)
-set(POTRACE_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/Potrace/include/)
-set(POTRACE_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/Potrace/lib/libpotrace.so)
-set(POTRACE_ROOT_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/Potrace/include/)
+set(POTRACE_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/Potrace/include/)
+set(POTRACE_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/Potrace/lib/libpotrace.so)
+set(POTRACE_ROOT_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/Potrace/include/)
 set(POTRACE_FOUND ON)
-set(POTRACE_LIBRARY D:/FreeProjects/Blender/Blender/lib-android_arm64/Potrace/lib/libpotrace.so)
+set(POTRACE_LIBRARY ${BLENDER_MOBILE_DIR}/lib-android_arm64/Potrace/lib/libpotrace.so)

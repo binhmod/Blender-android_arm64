@@ -4,7 +4,7 @@
 set(INC
   ..
   ../../sky/include
-  D:/FreeProjects/Blender/Blender/lib-android_arm64/boost/boost_1_71_0/
+  ${BLENDER_MOBILE_DIR}/lib-android_arm64/boost/boost_1_71_0/
 )
 
 set(SRC

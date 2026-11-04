@@ -143,16 +143,16 @@ SET(OPENCOLLADA_INCLUDE_DIRS
         F:\\FreeProjects\\android\\OpenCOLLADA-main\\G3DWarehouseBrowser\\include\\)
 SET(OPENCOLLADA_FOUND ON)
 SET(OPENCOLLADA_LIBRARIES
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libbuffer.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libftoa.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libGeneratedSaxParser.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libMathMLSolver.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libOpenCOLLADABaseUtils.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libOpenCOLLADAFramework.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libOpenCOLLADASaxFrameworkLoader.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libOpenCOLLADAStreamWriter.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libpcre.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libUTF.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libxml.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libzlib.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libbuffer.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libftoa.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libGeneratedSaxParser.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libMathMLSolver.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libOpenCOLLADABaseUtils.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libOpenCOLLADAFramework.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libOpenCOLLADASaxFrameworkLoader.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libOpenCOLLADAStreamWriter.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libpcre.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libUTF.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libxml.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libzlib.so
         )

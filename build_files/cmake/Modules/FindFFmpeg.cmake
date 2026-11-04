@@ -82,17 +82,17 @@
 ## In cmake version 3.21 and up, we can instead use the NO_CACHE option for
 ## find_path so we don't need to clear it from the cache here.
 #unset(_ffmpeg_INCLUDE_DIR CACHE)
-SET(FFMPEG_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/ffmpeg/include/)
-SET(FFMPEG_ROOT_DIR     D:/FreeProjects/Blender/Blender/lib-android_arm64/ffmpeg/include/)
+SET(FFMPEG_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/ffmpeg/include/)
+SET(FFMPEG_ROOT_DIR     ${BLENDER_MOBILE_DIR}/lib-android_arm64/ffmpeg/include/)
 SET(FFMPEG_LIBRARIES
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/ffmpeg/lib/libavcodec.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/ffmpeg/lib/libavdevice.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/ffmpeg/lib/libavfilter.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/ffmpeg/lib/libavformat.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/ffmpeg/lib/libavutil.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/ffmpeg/lib/libswresample.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/ffmpeg/lib/libswscale.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/ffmpeg/lib/libpostproc.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/ffmpeg/lib/libavcodec.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/ffmpeg/lib/libavdevice.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/ffmpeg/lib/libavfilter.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/ffmpeg/lib/libavformat.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/ffmpeg/lib/libavutil.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/ffmpeg/lib/libswresample.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/ffmpeg/lib/libswscale.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/ffmpeg/lib/libpostproc.so
         c++_shared
         z)
 SET(FFMPEG_FOUND ON)

@@ -90,7 +90,7 @@ endif()
 set(INC_SYS
   ${PYTHON_INCLUDE_DIRS}
   ${ZLIB_INCLUDE_DIRS}
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/boost/boost_1_71_0/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/boost/boost_1_71_0/
 )
 
 if(WITH_MANTA_NUMPY AND WITH_PYTHON_NUMPY)

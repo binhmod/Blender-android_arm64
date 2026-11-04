@@ -36,7 +36,7 @@ set(INC
   # dna_type_offsets.h
   ${CMAKE_CURRENT_BINARY_DIR}/../makesdna/intern
   ${Epoxy_INCLUDE_DIRS}
-  D:/FreeProjects/Blender/Blender/lib-android_arm64/Epoxy/include/
+  ${BLENDER_MOBILE_DIR}/lib-android_arm64/Epoxy/include/
 )
 
 set(SRC

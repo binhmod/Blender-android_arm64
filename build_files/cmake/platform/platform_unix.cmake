@@ -108,27 +108,27 @@ endif()
 #find_package_wrapper(ZLIB REQUIRED)
 #find_package_wrapper(Zstd REQUIRED)
 #find_package_wrapper(Epoxy REQUIRED)
-SET(JPEG_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/JPEG/lib/libjpeg.a)
-SET(JPEG_LIBRARY   D:/FreeProjects/Blender/Blender/lib-android_arm64/JPEG/lib/libjpeg.a)
-SET(JPEG_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/JPEG/include/LibJPEG/)
-SET(ZLIB_LIBRARY D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenCOLLADA/lib/libzlib.so)
-set(PNG_PNG_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/Png/include/libpng-1.6.40/)
+SET(JPEG_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/JPEG/lib/libjpeg.a)
+SET(JPEG_LIBRARY   ${BLENDER_MOBILE_DIR}/lib-android_arm64/JPEG/lib/libjpeg.a)
+SET(JPEG_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/JPEG/include/LibJPEG/)
+SET(ZLIB_LIBRARY ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libzlib.so)
+set(PNG_PNG_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/Png/include/libpng-1.6.40/)
 set(PNG_LIBRARIES
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/Png/lib/libpng16.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/Png/lib/libpng16.so
         ${ZLIB_LIBRARY}
         )
-set(PNG D:/FreeProjects/Blender/Blender/lib-android_arm64/Png/include/libpng-1.6.40/)
-set(PNG_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/Png/include/libpng-1.6.40/)
-set(PNG_LIBPATH D:/FreeProjects/Blender/Blender/lib-android_arm64/Png/include/libpng-1.6.40/) # not cmake defined
-SET(ZSTD_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/zstd/include/zstd/)
-SET(ZSTD_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/zstd/lib/libzstd.so)
-SET(ZSTD_LIBRARY   D:/FreeProjects/Blender/Blender/lib-android_arm64/zstd/lib/libzstd.so)
-SET(ZSTD_ROOT_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/zstd/include/zstd/)
+set(PNG ${BLENDER_MOBILE_DIR}/lib-android_arm64/Png/include/libpng-1.6.40/)
+set(PNG_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/Png/include/libpng-1.6.40/)
+set(PNG_LIBPATH ${BLENDER_MOBILE_DIR}/lib-android_arm64/Png/include/libpng-1.6.40/) # not cmake defined
+SET(ZSTD_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/zstd/include/zstd/)
+SET(ZSTD_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/zstd/lib/libzstd.so)
+SET(ZSTD_LIBRARY   ${BLENDER_MOBILE_DIR}/lib-android_arm64/zstd/lib/libzstd.so)
+SET(ZSTD_ROOT_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/zstd/include/zstd/)
 SET(ZSTD_FOUND ON)
-SET(LibEpoxy_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/Epoxy/include/)
-SET(LibEpoxy_LIBRARY D:/FreeProjects/Blender/Blender/lib-android_arm64/Epoxy/lib/libepoxy.a)
-SET(LibEpoxy_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/Epoxy/lib/libepoxy.a)
-SET(LibEpoxy_ROOT_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/Epoxy/include/)
+SET(LibEpoxy_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/Epoxy/include/)
+SET(LibEpoxy_LIBRARY ${BLENDER_MOBILE_DIR}/lib-android_arm64/Epoxy/lib/libepoxy.a)
+SET(LibEpoxy_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/Epoxy/lib/libepoxy.a)
+SET(LibEpoxy_ROOT_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/Epoxy/include/)
 SET(LibEpoxy_FOUND ON)
 
 # XXX Linking errors with debian static tiff :/
@@ -156,13 +156,13 @@ if(NOT WITH_SYSTEM_FREETYPE)
   # FreeType compiled with Brotli compression for woff2.
 #  find_package_wrapper(Freetype REQUIRED)
   set(FREETYPE_INCLUDE_DIRS
-          D:/FreeProjects/Blender/Blender/lib-android_arm64/FreeType/include/
+          ${BLENDER_MOBILE_DIR}/lib-android_arm64/FreeType/include/
           )
   SET(FREETYPE_LIBRARIES
-          D:/FreeProjects/Blender/Blender/lib-android_arm64/Brotli/lib/libbrotlicommon.so
-          D:/FreeProjects/Blender/Blender/lib-android_arm64/Brotli/lib/libbrotlidec.so
-          D:/FreeProjects/Blender/Blender/lib-android_arm64/Brotli/lib/libbrotlienc.so
-          D:/FreeProjects/Blender/Blender/lib-android_arm64/FreeType/lib/libfreetype.so
+          ${BLENDER_MOBILE_DIR}/lib-android_arm64/Brotli/lib/libbrotlicommon.so
+          ${BLENDER_MOBILE_DIR}/lib-android_arm64/Brotli/lib/libbrotlidec.so
+          ${BLENDER_MOBILE_DIR}/lib-android_arm64/Brotli/lib/libbrotlienc.so
+          ${BLENDER_MOBILE_DIR}/lib-android_arm64/FreeType/lib/libfreetype.so
           )
   SET(FREETYPE_FOUND ON)
   if(DEFINED LIBDIR)
@@ -408,12 +408,12 @@ if(WITH_MATERIALX)
   set_and_warn_library_found("MaterialX" MaterialX_FOUND WITH_MATERIALX)
 endif()
 add_bundled_libraries(materialx/lib)
-SET(BOOST_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/boost/boost_1_71_0/)
-SET(Boost_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/boost/boost_1_71_0/)
+SET(BOOST_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/boost/boost_1_71_0/)
+SET(Boost_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/boost/boost_1_71_0/)
 SET(BOOST_LIBRARIES
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/ICUC/lib/libicuc.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/BoostLocal/lib/libboostlocale.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/BoostPython/lib/libboostpython.so)
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/ICUC/lib/libicuc.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/BoostLocal/lib/libboostlocale.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/BoostPython/lib/libboostpython.so)
 SET(BOOST_FOUND ON)
 if(WITH_BOOST)
   # uses in build instructions to override include and library variables
@@ -440,12 +440,12 @@ if(WITH_BOOST)
     endif()
     list(APPEND __boost_packages system)
     set(Boost_NO_WARN_NEW_VERSIONS ON)
-    SET(BOOST_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/boost/boost_1_71_0/)
-    SET(Boost_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/boost/boost_1_71_0/)
+    SET(BOOST_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/boost/boost_1_71_0/)
+    SET(Boost_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/boost/boost_1_71_0/)
     SET(BOOST_LIBRARIES
-            D:/FreeProjects/Blender/Blender/lib-android_arm64/ICUC/lib/libicuc.so
-            D:/FreeProjects/Blender/Blender/lib-android_arm64/BoostLocal/lib/libboostlocale.so
-            D:/FreeProjects/Blender/Blender/lib-android_arm64/BoostPython/lib/libboostpython.so)
+            ${BLENDER_MOBILE_DIR}/lib-android_arm64/ICUC/lib/libicuc.so
+            ${BLENDER_MOBILE_DIR}/lib-android_arm64/BoostLocal/lib/libboostlocale.so
+            ${BLENDER_MOBILE_DIR}/lib-android_arm64/BoostPython/lib/libboostpython.so)
     SET(BOOST_FOUND ON)
     #    find_package(Boost 1.71 COMPONENTS ${__boost_packages})
 #    if(NOT Boost_FOUND)
@@ -572,8 +572,8 @@ if(WITH_HARU)
 endif()
 
 if(WITH_CYCLES AND WITH_CYCLES_PATH_GUIDING)
-  SET(OPENPGL_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/Openpgl/lib/libopenpgl.so)
-  SET(OPENPGL_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/Openpgl/include/openpgl-0.7.0/openpgl/include/)
+  SET(OPENPGL_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/Openpgl/lib/libopenpgl.so)
+  SET(OPENPGL_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/Openpgl/include/openpgl-0.7.0/openpgl/include/)
   SET(OPENPGL_FOUND ON)
 #  find_package_wrapper(openpgl)
 #  if(openpgl_FOUND)

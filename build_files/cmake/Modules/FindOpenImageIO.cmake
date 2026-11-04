@@ -115,11 +115,11 @@
 #
 #UNSET(_openimageio_SEARCH_DIRS)
 #UNSET(_openimageio_LIBRARIES)
-SET(OPENIMAGEIO_ROOT_DIR     D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenImageIO/include/src/include/)
-set(OPENIMAGEIO_INCLUDE_DIR  D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenImageIO/include/src/include/)
-SET(OPENIMAGEIO_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenImageIO/include/src/include/)
-set(OPENIMAGEIO_LIBRARY D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenImageIO/lib/libOpenImageIO.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenImageIO/lib/libOpenImageIO_Util.so)
-set(OPENIMAGEIO_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenImageIO/lib/libOpenImageIO.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenImageIO/lib/libOpenImageIO_Util.so)
+SET(OPENIMAGEIO_ROOT_DIR     ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenImageIO/include/src/include/)
+set(OPENIMAGEIO_INCLUDE_DIR  ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenImageIO/include/src/include/)
+SET(OPENIMAGEIO_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenImageIO/include/src/include/)
+set(OPENIMAGEIO_LIBRARY ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenImageIO/lib/libOpenImageIO.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenImageIO/lib/libOpenImageIO_Util.so)
+set(OPENIMAGEIO_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenImageIO/lib/libOpenImageIO.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenImageIO/lib/libOpenImageIO_Util.so)
 SET(OPENIMAGEIO_FOUND ON)

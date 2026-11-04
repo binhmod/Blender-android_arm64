@@ -48,6 +48,6 @@
 #  endif()
 #
 #endif()
-SET(OPENAL_INCLUDE_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenAL/include/openal-soft-master/include/AL/)
-SET(OPENAL_LIBRARY D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenAL/lib/libopenal.so OpenSLES)
+SET(OPENAL_INCLUDE_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenAL/include/openal-soft-master/include/AL/)
+SET(OPENAL_LIBRARY ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenAL/lib/libopenal.so OpenSLES)
 SET(OPENAL_FOUND ON)

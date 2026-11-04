@@ -59,8 +59,8 @@
 #  BLOSC_INCLUDE_DIR
 #  BLOSC_LIBRARY
 #)
-SET(BLOSC_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/blosc/include/)
-SET(BLOSC_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/blosc/lib/libblosc.a)
-SET(BLOSC_ROOT_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/blosc/include/)
-SET(BLOSC_LIBRARY D:/FreeProjects/Blender/Blender/lib-android_arm64/blosc/lib/libblosc.a)
+SET(BLOSC_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/blosc/include/)
+SET(BLOSC_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/blosc/lib/libblosc.a)
+SET(BLOSC_ROOT_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/blosc/include/)
+SET(BLOSC_LIBRARY ${BLENDER_MOBILE_DIR}/lib-android_arm64/blosc/lib/libblosc.a)
 SET(BLOSC_FOUND ON)

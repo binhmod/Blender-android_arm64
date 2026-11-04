@@ -213,17 +213,17 @@
 #UNSET(_openexr_FIND_COMPONENTS)
 #UNSET(_openexr_LIBRARIES)
 #UNSET(_openexr_SEARCH_DIRS)
-SET(OPENEXR_ROOT_DIR      D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenExr/include)
-SET(OPENEXR_INCLUDE_DIRS  D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenExr/include
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenExr/include/OpenEXR/
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/IMath/include/
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/IMath/include/Imath
+SET(OPENEXR_ROOT_DIR      ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenExr/include)
+SET(OPENEXR_INCLUDE_DIRS  ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenExr/include
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenExr/include/OpenEXR/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/IMath/include/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/IMath/include/Imath
         )
 SET(OPENEXR_LIBRARIES
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/IMath/lib/libImath-3_0.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenExr/lib/libIlmThread-3_0.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenExr/lib/libOpenEXRUtil-3_0.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenExr/lib/libOpenEXR-3_0.so
-        D:/FreeProjects/Blender/Blender/lib-android_arm64/OpenExr/lib/libIex-3_0.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/IMath/lib/libImath-3_0.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenExr/lib/libIlmThread-3_0.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenExr/lib/libOpenEXRUtil-3_0.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenExr/lib/libOpenEXR-3_0.so
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenExr/lib/libIex-3_0.so
         )
 SET(OPENEXR_FOUND ON)

@@ -56,8 +56,8 @@
 #  FFTW3_INCLUDE_DIR
 #  FFTW3_LIBRARY
 #)
-SET(FFTW3_INCLUDE_DIRS D:/FreeProjects/Blender/Blender/lib-android_arm64/Fftw/include/fftw-3.3.10/api/)
-SET(FFTW3_LIBRARIES D:/FreeProjects/Blender/Blender/lib-android_arm64/Fftw/lib/libfftw3.so)
-SET(FFTW3_ROOT_DIR D:/FreeProjects/Blender/Blender/lib-android_arm64/Fftw/include/fftw-3.3.10/api/)
+SET(FFTW3_INCLUDE_DIRS ${BLENDER_MOBILE_DIR}/lib-android_arm64/Fftw/include/fftw-3.3.10/api/)
+SET(FFTW3_LIBRARIES ${BLENDER_MOBILE_DIR}/lib-android_arm64/Fftw/lib/libfftw3.so)
+SET(FFTW3_ROOT_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/Fftw/include/fftw-3.3.10/api/)
 SET(FFTW3_FOUND TRUE)
-SET(FFTW3_LIBRARY D:/FreeProjects/Blender/Blender/lib-android_arm64/Fftw/lib/libfftw3.so)
+SET(FFTW3_LIBRARY ${BLENDER_MOBILE_DIR}/lib-android_arm64/Fftw/lib/libfftw3.so)
