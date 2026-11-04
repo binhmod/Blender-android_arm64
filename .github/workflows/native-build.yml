@@ -82,7 +82,7 @@ jobs:
         id: gen_dna
         run: |
           SYSROOT_LIB="$HOME/${NDK_VERSION}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28"
-          MD_BIN=build/source/blender/makesdna/makesdna
+          MD_BIN=build/bin/makesdna
           ls -l "$MD_BIN"
           mkdir -p /tmp/mkdna build/source/blender/makesdna/intern
           qemu-aarch64 -L "$SYSROOT_LIB" "$MD_BIN" \
@@ -104,7 +104,7 @@ jobs:
         continue-on-error: true
         run: |
           SYSROOT_LIB="$HOME/${NDK_VERSION}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28"
-          MR_BIN=build/source/blender/makesrna/makesrna
+          MR_BIN=build/bin/makesrna
           ls -l "$MR_BIN"
           mkdir -p build/source/blender/makesrna/intern
           qemu-aarch64 -L "$SYSROOT_LIB" "$MR_BIN" \
