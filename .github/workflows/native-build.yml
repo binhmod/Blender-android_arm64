@@ -10,14 +10,18 @@ name: Native build probe (libblender.so)
 #     lib-android_arm64/      (prebuilt third-party deps)
 #
 # The custom-commands that run makesdna/makesrna are already commented-out in
-# this tree (author's manual flow generated them on the Android device).
-# On CI we instead:
-#   1. build makesdna as an arm64v8a binary via the NDK cross toolchain
-#   2. run it under qemu-user-aarch64 on the x86_64 runner to generate dna.c / ...
-#   3. place the generated files into the build dir like the author's manual flow
+# this tree. Upstream Blender generates DNA/RNA on the build machine and this
+# is safe to cross-consume (both x86_64 host and arm64 target are LP64).
+# Only the author replaced the tool EXECUTABLES with STATIC LIBRARIES
+# (for their on-device helper apps); we restored the executables.
 #
-# Current milestone: make makesdna + makesrna build & run. Full bf libs build
-# comes after this one is green.
+# Milestones:
+#   1. host configure/build of makesdna (DONE)
+#   2. host build of makesrna + DNA/RNA generation (CURRENT)
+#   3. full arm64 build with generated files (NEXT)
+#
+# NOTE: arm64 NDK binaries cannot run under qemu-user on the runner because
+# bionic's ELF interpreter is /system/bin/linker64 - hence the host tools.
 
 on:
   push:
@@ -28,7 +32,7 @@ env:
   NDK_VERSION: android-ndk-r21e  # NDK 21.4.7075529 used by the author
 
 jobs:
-  native-configure:
+  native-probe:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Blender source
@@ -46,20 +50,67 @@ jobs:
       - name: Install build tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y ninja-build qemu-user
+          sudo apt-get install -y ninja-build
           ninja --version
 
-      - name: Download NDK r21e
+      - name: Download NDK r21e (for later full arm64 build)
         run: |
           if [ ! -d "$HOME/${NDK_VERSION}" ]; then
             curl -sSL -o /tmp/ndk.zip https://dl.google.com/android/repository/${NDK_VERSION}-linux-x86_64.zip
             unzip -q /tmp/ndk.zip -d "$HOME"
             rm /tmp/ndk.zip
           fi
-          ls "$HOME/${NDK_VERSION}"
+          ls "$HOME/${NDK_VERSION}" >/dev/null
 
-      - name: Configure (cross arm64-v8a)
-        id: configure
+      # ---- HOST tools (makesdna / makesrna) ----
+      - name: Host configure (no cross toolchain)
+        run: |
+          set -o pipefail
+          cmake \
+            -G Ninja \
+            -B build_host \
+            -S Blender-android_arm64 \
+            -DBLENDER_MOBILE_DIR="$GITHUB_WORKSPACE" \
+            -DCMAKE_BUILD_TYPE=Release 2>&1 | tee configure_host.log
+
+      - name: Host build makesdna
+        run: |
+          set -o pipefail
+          cmake --build build_host --target makesdna 2>&1 | tee build_makesdna.log
+
+      - name: Generate DNA files (host)
+        run: |
+          MD_BIN=build_host/bin/makesdna
+          ls -l "$MD_BIN"
+          mkdir -p dna_out build/source/blender/makesdna/intern
+          "$MD_BIN" \
+            dna_out/dna.c dna_out/dna_type_offsets.h dna_out/dna_verify.c \
+            "$GITHUB_WORKSPACE/Blender-android_arm64/source/blender/makesdna/"
+          cp dna_out/* build/source/blender/makesdna/intern/
+          ls -lh dna_out build/source/blender/makesdna/intern
+
+      - name: Host build makesrna
+        id: build_makesrna
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          cmake --build build_host --target makesrna 2>&1 | tee build_makesrna.log
+
+      - name: Generate RNA files (host)
+        id: gen_rna
+        if: steps.build_makesrna.outcome == 'success'
+        continue-on-error: true
+        run: |
+          MR_BIN=build_host/bin/makesrna
+          ls -l "$MR_BIN"
+          mkdir -p build/source/blender/makesrna/intern build/source/blender/makesrna
+          "$MR_BIN" \
+            build/source/blender/makesrna/intern build/source/blender/makesrna
+          ls build/source/blender/makesrna/intern | head -30
+
+      # ---- ARM64 configure sanity (uses the DNA/RNA generated above) ----
+      - name: Configure arm64 cross build
+        if: steps.gen_rna.outcome != 'skipped'
         run: |
           set -o pipefail
           cmake \
@@ -70,66 +121,18 @@ jobs:
             -DCMAKE_TOOLCHAIN_FILE="$HOME/${NDK_VERSION}/build/cmake/android.toolchain.cmake" \
             -DANDROID_ABI=arm64-v8a \
             -DANDROID_PLATFORM=android-28 \
-            -DCMAKE_BUILD_TYPE=Release 2>&1 | tee configure.log
+            -DCMAKE_BUILD_TYPE=Release 2>&1 | tee configure_arm.log
 
-      - name: Build makesdna (arm64)
-        id: build_makesdna
-        run: |
-          set -o pipefail
-          cmake --build build --target makesdna 2>&1 | tee build_makesdna.log
-
-      - name: Generate DNA files under qemu-user
-        id: gen_dna
-        run: |
-          SYSROOT_LIB="$HOME/${NDK_VERSION}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28"
-          MD_BIN=build/bin/makesdna
-          ls -l "$MD_BIN"
-          mkdir -p /tmp/mkdna build/source/blender/makesdna/intern
-          qemu-aarch64 -L "$SYSROOT_LIB" "$MD_BIN" \
-            /tmp/mkdna/dna.c /tmp/mkdna/dna_type_offsets.h /tmp/mkdna/dna_verify.c \
-            "$GITHUB_WORKSPACE/Blender-android_arm64/source/blender/makesdna/"
-          cp /tmp/mkdna/* build/source/blender/makesdna/intern/
-          ls -lh /tmp/mkdna build/source/blender/makesdna/intern
-
-      - name: Build makesrna (arm64)
-        id: build_makesrna
-        continue-on-error: true
-        run: |
-          set -o pipefail
-          cmake --build build --target makesrna 2>&1 | tee build_makesrna.log
-
-      - name: Generate RNA files under qemu-user
-        id: gen_rna
-        if: steps.build_makesrna.outcome == 'success'
-        continue-on-error: true
-        run: |
-          SYSROOT_LIB="$HOME/${NDK_VERSION}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28"
-          MR_BIN=build/bin/makesrna
-          ls -l "$MR_BIN"
-          mkdir -p build/source/blender/makesrna/intern
-          qemu-aarch64 -L "$SYSROOT_LIB" "$MR_BIN" \
-            build/source/blender/makesrna/intern build/source/blender/makesrna
-          ls -lh build/source/blender/makesrna/intern build/source/blender/makesrna | head -30
-
-      - name: Upload logs & artifacts
+      - name: Upload logs & generated files
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: native-probe-logs
           path: |
-            configure.log
+            configure_host.log
+            configure_arm.log
             build_makesdna.log
             build_makesrna.log
-            build/CMakeFiles/CMakeError.log
-            build/source/blender/makesdna/intern/dna.c
-            build/source/blender/makesdna/intern/dna_verify.c
-            build/source/blender/makesrna/intern/*.h
-          if-no-files-found: ignore
-
-      - name: Upload build directory (cache for next milestone)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-dir
-          path: build
+            dna_out/*
+            build/source/blender/makesrna/intern/
           if-no-files-found: ignore
