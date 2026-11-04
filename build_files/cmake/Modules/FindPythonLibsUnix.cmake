@@ -250,8 +250,8 @@ SET(PYTHON_LIBRARY
         ${BLENDER_MOBILE_DIR}/lib-android_arm64/sqlite/lib/libsqlite.so
         ${BLENDER_MOBILE_DIR}/lib-android_arm64/zip/lib/libzip.so)
 SET(PYTHON_LIBPATH            ${BLENDER_MOBILE_DIR}/lib-android_arm64/cpython/include/)
-SET(PYTHON_INCLUDE_DIR        ${BLENDER_MOBILE_DIR}/lib-android_arm64/cpython/include/include/)
-SET(PYTHON_INCLUDE_DIRS       ${BLENDER_MOBILE_DIR}/lib-android_arm64/cpython/include/include/)
+SET(PYTHON_INCLUDE_DIR        ${BLENDER_MOBILE_DIR}/lib-android_arm64/cpython/include/Include/)
+SET(PYTHON_INCLUDE_DIRS       ${BLENDER_MOBILE_DIR}/lib-android_arm64/cpython/include/Include/)
 SET(PYTHON_INCLUDE_CONFIG_DIR ${BLENDER_MOBILE_DIR}/lib-android_arm64/cpython/include/android/linux_arm64/pyconfig/)
 SET(PYTHONLIBS_FOUND TRUE)
 SET(PYTHON_LIBRARIES
