@@ -91,7 +91,9 @@ jobs:
           cmake --build build_host --target makesrna 2>&1 | tee build_makesrna.log
           MR_BIN=build_host/bin/makesrna
           mkdir -p build/source/blender/makesrna/intern build/source/blender/makesrna
-          "$MR_BIN" build/source/blender/makesrna/intern build/source/blender/makesrna
+          # NOTE: makesrna concatenates outfile + filename, so both dirs need a
+          # trailing slash (upstream usage: outdirectory/ [public_header_dir]/).
+          "$MR_BIN" build/source/blender/makesrna/intern/ build/source/blender/makesrna/
           ls build/source/blender/makesrna/intern | head -30
 
       # ---- ARM64 full build ----
