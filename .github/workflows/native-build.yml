@@ -111,9 +111,73 @@ jobs:
           mkdir -p hosttools
           gcc Blender-android_arm64/source/blender/datatoc/datatoc.c -o hosttools/datatoc
           gcc Blender-android_arm64/source/blender/datatoc/datatoc_icon.c -o hosttools/datatoc_icon -lpng -lm
-          gcc Blender-android_arm64/source/blender/blentranslation/msgfmt/msgfmt.c -o hosttools/msgfmt
           g++ Blender-android_arm64/extern/smaa_areatex/smaa_areatex.cpp -o hosttools/smaa_areatex
+          # ---- host msgfmt (standalone, minimal blenlib + stubs) ----
+          mkdir -p hostinc
+          cat > hostinc/DNA_vec_types.h <<'HNI'
+#pragma once
+typedef struct vec2i { int x, y; } vec2i;
+typedef struct vec2f { float x, y; } vec2f;
+typedef struct vec3f { float x, y, z; } vec3f;
+typedef struct vec2 { float vec[2]; } vec2;
+typedef struct vec3 { float vec[3]; } vec3;
+typedef struct vec4 { float vec[4]; } vec4;
+typedef struct rctf { float xmin, ymin, xmax, ymax; } rctf;
+typedef struct rcti { int xmin, ymin, xmax, ymax; } rcti;
+typedef struct DualQuat { vec4 quat, trans, scale, quat_offset; float scale_weight; } DualQuat;
+typedef struct eul3 { float eul[3]; } eul3;
+HNI
+          cat > hostinc/DNA_listBase.h <<'HNI'
+#pragma once
+typedef struct ListBase { void *first, *last; } ListBase;
+typedef struct Link { struct Link *next, *prev; } Link;
+typedef struct LinkData { struct LinkData *next; void *data; } LinkData;
+HNI
+          cat > hosttools/shims.c <<'HNI'
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct LinkData { struct LinkData *next; void *data; } LinkData;
+FILE *BLI_fopen(const char *path, const char *mode) { return fopen(path, mode); }
+void BLI_file_free_lines(struct LinkData *lines) {
+  while (lines) { LinkData *n = lines->next; free(lines->data); free(lines); lines = n; }
+}
+struct LinkData *BLI_file_read_as_lines(const char *filepath) {
+  FILE *fp = fopen(filepath, "rb");
+  if (!fp) return NULL;
+  LinkData *head = NULL, *tail = NULL; char *buf; long sz;
+  fseek(fp, 0, SEEK_END); sz = ftell(fp); fseek(fp, 0, SEEK_SET);
+  buf = malloc((size_t)sz + 1); (void)fread(buf, 1, (size_t)sz, fp); fclose(fp); buf[sz]='\0';
+  char *p = buf;
+  while (*p) {
+    char *e = strchr(p, '\n'); size_t len; char *s;
+    if (e) { len = (size_t)(e - p); } else { len = strlen(p); }
+    s = malloc(len + 1); memcpy(s, p, len); s[len] = '\0';
+    LinkData *ld = malloc(sizeof(LinkData)); ld->data = s; ld->next = NULL;
+    if (tail) tail->next = ld; else head = ld; tail = ld;
+    if (e) p = e + 1; else break;
+  }
+  free(buf);
+  return head;
+}
+HNI
+          cat > hosttools/shims2.c <<'HNI'
+int leak_detector_has_run = 0;
+char free_after_leak_detection_message[] = "Error: Not freed memory blocks...";
+HNI
+          BLIB=Blender-android_arm64/source/blender/blenlib
+          gcc -w -I hostinc -I $BLIB -I $BLIB/intern -I Blender-android_arm64/intern/guardedalloc -I Blender-android_arm64/intern/atomic \
+            Blender-android_arm64/source/blender/blentranslation/msgfmt/msgfmt.c \
+            $BLIB/intern/BLI_dynstr.c $BLIB/intern/BLI_ghash.c $BLIB/intern/BLI_ghash_utils.c \
+            $BLIB/intern/BLI_memarena.c $BLIB/intern/BLI_mempool.c $BLIB/intern/BLI_assert.c \
+            $BLIB/intern/string.c $BLIB/intern/hash_mm2a.c $BLIB/intern/system.c $BLIB/intern/listbase.cc \
+            Blender-android_arm64/intern/guardedalloc/intern/mallocn.c \
+            Blender-android_arm64/intern/guardedalloc/intern/mallocn_guarded_impl.c \
+            Blender-android_arm64/intern/guardedalloc/intern/mallocn_lockfree_impl.c \
+            Blender-android_arm64/intern/guardedalloc/intern/memory_usage.cc \
+            hosttools/shims.c hosttools/shims2.c -lstdc++ -lm -lpthread -o hosttools/msgfmt
           ./hosttools/datatoc Blender-android_arm64/source/blender/datatoc/datatoc.c /tmp/_smoke.txt && wc -c /tmp/_smoke.txt
+          ./hosttools/msgfmt 2>&1 | head -1
           echo host-datatoc-ok
 
       # ---- ARM64 full build ----
