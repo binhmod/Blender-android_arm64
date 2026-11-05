@@ -111,6 +111,8 @@ jobs:
           mkdir -p hosttools
           gcc Blender-android_arm64/source/blender/datatoc/datatoc.c -o hosttools/datatoc
           gcc Blender-android_arm64/source/blender/datatoc/datatoc_icon.c -o hosttools/datatoc_icon -lpng -lm
+          gcc Blender-android_arm64/source/blender/blentranslation/msgfmt/msgfmt.c -o hosttools/msgfmt
+          g++ Blender-android_arm64/extern/smaa_areatex/smaa_areatex.cpp -o hosttools/smaa_areatex
           ./hosttools/datatoc Blender-android_arm64/source/blender/datatoc/datatoc.c /tmp/_smoke.txt && wc -c /tmp/_smoke.txt
           echo host-datatoc-ok
 
@@ -133,10 +135,12 @@ jobs:
       - name: Swap in host datatoc tools
         run: |
           set -o pipefail
-          cmake --build build --target datatoc datatoc_icon 2>&1 | tee build_datatoc_arm.log || true
+          cmake --build build --target datatoc datatoc_icon msgfmt smaa_areatex 2>&1 | tee build_datatoc_arm.log || true
           cp -f hosttools/datatoc build/bin/datatoc
           cp -f hosttools/datatoc_icon build/bin/datatoc_icon
-          file build/bin/datatoc build/bin/datatoc_icon
+          cp -f hosttools/msgfmt build/bin/msgfmt
+          cp -f hosttools/smaa_areatex build/bin/smaa_areatex
+          file build/bin/datatoc build/bin/datatoc_icon build/bin/msgfmt build/bin/smaa_areatex
 
       - name: Build arm64 (full)
         id: build_arm
