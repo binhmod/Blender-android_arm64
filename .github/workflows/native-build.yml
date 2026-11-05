@@ -38,10 +38,16 @@ jobs:
           ref: main
           path: lib-android_arm64
 
+      - name: Fix libpng headers (pnglibconf.h is build-generated; use prebuilt)
+        run: |
+          PNGD=lib-android_arm64/Png/include/libpng-1.6.40
+          cp "$PNGD/scripts/pnglibconf.h.prebuilt" "$PNGD/pnglibconf.h"
+          ls -l lib-android_arm64/Png/include/libpng-1.6.40/png*.h
+
       - name: Install build tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y ninja-build ccache
+          sudo apt-get install -y ninja-build ccache libpng-dev
           ninja --version
           ccache --version | head -1
 
@@ -96,6 +102,18 @@ jobs:
           "$MR_BIN" build/source/blender/makesrna/intern/ build/source/blender/makesrna/
           ls build/source/blender/makesrna/intern | head -30
 
+      # Build-time helper tools (datatoc, datatoc_icon) must exist as HOST
+      # executables: ninja calls them to bake datafiles (icons etc). We build
+      # the ARM variants once in the cross config, then overwrite them with
+      # host x86_64 binaries at the same path ($<TARGET_FILE:...>).
+      - name: Build datatoc tools for host
+        run: |
+          mkdir -p hosttools
+          gcc source/blender/datatoc/datatoc.c -o hosttools/datatoc
+          gcc source/blender/datatoc/datatoc_icon.c -o hosttools/datatoc_icon -lpng -lm
+          ./hosttools/datatoc source/blender/datatoc/datatoc.c /tmp/_smoke.txt && wc -c /tmp/_smoke.txt
+          echo host-datatoc-ok
+
       # ---- ARM64 full build ----
       - name: Configure arm64
         run: |
@@ -111,6 +129,14 @@ jobs:
             -DCMAKE_C_COMPILER_LAUNCHER=ccache \
             -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
             -DCMAKE_BUILD_TYPE=Release 2>&1 | tee configure_arm.log
+
+      - name: Swap in host datatoc tools
+        run: |
+          set -o pipefail
+          cmake --build build --target datatoc datatoc_icon 2>&1 | tee build_datatoc_arm.log || true
+          cp -f hosttools/datatoc build/bin/datatoc
+          cp -f hosttools/datatoc_icon build/bin/datatoc_icon
+          file build/bin/datatoc build/bin/datatoc_icon
 
       - name: Build arm64 (full)
         id: build_arm
@@ -136,6 +162,7 @@ jobs:
           name: arm64-build-outputs
           path: |
             build_arm.log
+            build_datatoc_arm.log
             build/lib/*.a
             build/lib/**/*.a
             build/bin/*.so
