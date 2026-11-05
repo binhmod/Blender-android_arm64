@@ -110,7 +110,9 @@ jobs:
         run: |
           mkdir -p hosttools
           gcc Blender-android_arm64/source/blender/datatoc/datatoc.c -o hosttools/datatoc
-          gcc Blender-android_arm64/source/blender/datatoc/datatoc_icon.c -o hosttools/datatoc_icon -lpng -lm
+          # datatoc_icon swaps bytes based on __LITTLE_ENDIAN__ (CMake adds it
+          # via add_definitions for MSVC/OSX/TestBigEndian; raw gcc needs it).
+          gcc -D__LITTLE_ENDIAN__ Blender-android_arm64/source/blender/datatoc/datatoc_icon.c -o hosttools/datatoc_icon -lpng -lm
           g++ Blender-android_arm64/extern/smaa_areatex/smaa_areatex.cpp -o hosttools/smaa_areatex
           # ---- host msgfmt (standalone, minimal blenlib + stubs) ----
           mkdir -p hosttools hostinc
