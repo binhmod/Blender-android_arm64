@@ -132,15 +132,15 @@
 #UNSET(_opencollada_LIBRARIES)
 #UNSET(_opencollada_INCLUDES)
 SET(OPENCOLLADA_INCLUDE_DIRS
-        F:\\FreeProjects\\android\\OpenCOLLADA-main\\COLLADABaseUtils\\include\\
-        F:\\FreeProjects\\android\\OpenCOLLADA-main\\COLLADAFramework\\include\\
-        F:\\FreeProjects\\android\\OpenCOLLADA-main\\COLLADAMax\\include\\
-        F:\\FreeProjects\\android\\OpenCOLLADA-main\\COLLADAMaya\\include\\
-        F:\\FreeProjects\\android\\OpenCOLLADA-main\\COLLADASaxFrameworkLoader\\include\\
-        F:\\FreeProjects\\android\\OpenCOLLADA-main\\COLLADAStreamWriter\\include\\
-        F:\\FreeProjects\\android\\OpenCOLLADA-main\\COLLADAValidator\\include\\
-        F:\\FreeProjects\\android\\OpenCOLLADA-main\\GeneratedSaxParser\\include\\
-        F:\\FreeProjects\\android\\OpenCOLLADA-main\\G3DWarehouseBrowser\\include\\)
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/COLLADABaseUtils/include/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/COLLADAFramework/include/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/COLLADAMax/include/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/COLLADAMaya/include/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/COLLADASaxFrameworkLoader/include/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/COLLADAStreamWriter/include/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/COLLADAValidator/include/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/GeneratedSaxParser/include/
+        ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/include/OpenCOLLADA-main/G3DWarehouseBrowser/include/)
 SET(OPENCOLLADA_FOUND ON)
 SET(OPENCOLLADA_LIBRARIES
         ${BLENDER_MOBILE_DIR}/lib-android_arm64/OpenCOLLADA/lib/libbuffer.so
