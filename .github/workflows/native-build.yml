@@ -113,58 +113,11 @@ jobs:
           gcc Blender-android_arm64/source/blender/datatoc/datatoc_icon.c -o hosttools/datatoc_icon -lpng -lm
           g++ Blender-android_arm64/extern/smaa_areatex/smaa_areatex.cpp -o hosttools/smaa_areatex
           # ---- host msgfmt (standalone, minimal blenlib + stubs) ----
-          mkdir -p hostinc
-          cat > hostinc/DNA_vec_types.h <<'HNI'
-#pragma once
-typedef struct vec2i { int x, y; } vec2i;
-typedef struct vec2f { float x, y; } vec2f;
-typedef struct vec3f { float x, y, z; } vec3f;
-typedef struct vec2 { float vec[2]; } vec2;
-typedef struct vec3 { float vec[3]; } vec3;
-typedef struct vec4 { float vec[4]; } vec4;
-typedef struct rctf { float xmin, ymin, xmax, ymax; } rctf;
-typedef struct rcti { int xmin, ymin, xmax, ymax; } rcti;
-typedef struct DualQuat { vec4 quat, trans, scale, quat_offset; float scale_weight; } DualQuat;
-typedef struct eul3 { float eul[3]; } eul3;
-HNI
-          cat > hostinc/DNA_listBase.h <<'HNI'
-#pragma once
-typedef struct ListBase { void *first, *last; } ListBase;
-typedef struct Link { struct Link *next, *prev; } Link;
-typedef struct LinkData { struct LinkData *next; void *data; } LinkData;
-HNI
-          cat > hosttools/shims.c <<'HNI'
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-typedef struct LinkData { struct LinkData *next; void *data; } LinkData;
-FILE *BLI_fopen(const char *path, const char *mode) { return fopen(path, mode); }
-void BLI_file_free_lines(struct LinkData *lines) {
-  while (lines) { LinkData *n = lines->next; free(lines->data); free(lines); lines = n; }
-}
-struct LinkData *BLI_file_read_as_lines(const char *filepath) {
-  FILE *fp = fopen(filepath, "rb");
-  if (!fp) return NULL;
-  LinkData *head = NULL, *tail = NULL; char *buf; long sz;
-  fseek(fp, 0, SEEK_END); sz = ftell(fp); fseek(fp, 0, SEEK_SET);
-  buf = malloc((size_t)sz + 1); (void)fread(buf, 1, (size_t)sz, fp); fclose(fp); buf[sz]='\0';
-  char *p = buf;
-  while (*p) {
-    char *e = strchr(p, '\n'); size_t len; char *s;
-    if (e) { len = (size_t)(e - p); } else { len = strlen(p); }
-    s = malloc(len + 1); memcpy(s, p, len); s[len] = '\0';
-    LinkData *ld = malloc(sizeof(LinkData)); ld->data = s; ld->next = NULL;
-    if (tail) tail->next = ld; else head = ld; tail = ld;
-    if (e) p = e + 1; else break;
-  }
-  free(buf);
-  return head;
-}
-HNI
-          cat > hosttools/shims2.c <<'HNI'
-int leak_detector_has_run = 0;
-char free_after_leak_detection_message[] = "Error: Not freed memory blocks...";
-HNI
+          mkdir -p hosttools hostinc
+          echo 'I3ByYWdtYSBvbmNlCnR5cGVkZWYgc3RydWN0IHZlYzJpIHsgaW50IHgsIHk7IH0gdmVjMmk7CnR5cGVkZWYgc3RydWN0IHZlYzJmIHsgZmxvYXQgeCwgeTsgfSB2ZWMyZjsKdHlwZWRlZiBzdHJ1Y3QgdmVjM2YgeyBmbG9hdCB4LCB5LCB6OyB9IHZlYzNmOwp0eXBlZGVmIHN0cnVjdCB2ZWMyIHsgZmxvYXQgdmVjWzJdOyB9IHZlYzI7CnR5cGVkZWYgc3RydWN0IHZlYzMgeyBmbG9hdCB2ZWNbM107IH0gdmVjMzsKdHlwZWRlZiBzdHJ1Y3QgdmVjNCB7IGZsb2F0IHZlY1s0XTsgfSB2ZWM0Owp0eXBlZGVmIHN0cnVjdCByY3RmIHsgZmxvYXQgeG1pbiwgeW1pbiwgeG1heCwgeW1heDsgfSByY3RmOwp0eXBlZGVmIHN0cnVjdCByY3RpIHsgaW50IHhtaW4sIHltaW4sIHhtYXgsIHltYXg7IH0gcmN0aTsKdHlwZWRlZiBzdHJ1Y3QgRHVhbFF1YXQgeyB2ZWM0IHF1YXQsIHRyYW5zLCBzY2FsZSwgcXVhdF9vZmZzZXQ7IGZsb2F0IHNjYWxlX3dlaWdodDsgfSBEdWFsUXVhdDsKdHlwZWRlZiBzdHJ1Y3QgZXVsMyB7IGZsb2F0IGV1bFszXTsgfSBldWwzOwo=' | base64 -d > hostinc/DNA_vec_types.h
+          echo 'I3ByYWdtYSBvbmNlCnR5cGVkZWYgc3RydWN0IExpc3RCYXNlIHsgdm9pZCAqZmlyc3QsICpsYXN0OyB9IExpc3RCYXNlOwp0eXBlZGVmIHN0cnVjdCBMaW5rIHsgc3RydWN0IExpbmsgKm5leHQsICpwcmV2OyB9IExpbms7CnR5cGVkZWYgc3RydWN0IExpbmtEYXRhIHsgc3RydWN0IExpbmtEYXRhICpuZXh0OyB2b2lkICpkYXRhOyB9IExpbmtEYXRhOwo=' | base64 -d > hostinc/DNA_listBase.h
+          echo 'I2luY2x1ZGUgPHN0ZGlvLmg+CiNpbmNsdWRlIDxzdGRsaWIuaD4KI2luY2x1ZGUgPHN0cmluZy5oPgp0eXBlZGVmIHN0cnVjdCBMaW5rRGF0YSB7IHN0cnVjdCBMaW5rRGF0YSAqbmV4dDsgdm9pZCAqZGF0YTsgfSBMaW5rRGF0YTsKRklMRSAqQkxJX2ZvcGVuKGNvbnN0IGNoYXIgKnBhdGgsIGNvbnN0IGNoYXIgKm1vZGUpIHsgcmV0dXJuIGZvcGVuKHBhdGgsIG1vZGUpOyB9CnZvaWQgQkxJX2ZpbGVfZnJlZV9saW5lcyhzdHJ1Y3QgTGlua0RhdGEgKmxpbmVzKSB7CiAgd2hpbGUgKGxpbmVzKSB7IExpbmtEYXRhICpuID0gbGluZXMtPm5leHQ7IGZyZWUobGluZXMtPmRhdGEpOyBmcmVlKGxpbmVzKTsgbGluZXMgPSBuOyB9Cn0Kc3RydWN0IExpbmtEYXRhICpCTElfZmlsZV9yZWFkX2FzX2xpbmVzKGNvbnN0IGNoYXIgKmZpbGVwYXRoKSB7CiAgRklMRSAqZnAgPSBmb3BlbihmaWxlcGF0aCwgInJiIik7CiAgaWYgKCFmcCkgcmV0dXJuIE5VTEw7CiAgTGlua0RhdGEgKmhlYWQgPSBOVUxMLCAqdGFpbCA9IE5VTEw7IGNoYXIgKmJ1ZjsgbG9uZyBzejsKICBmc2VlayhmcCwgMCwgU0VFS19FTkQpOyBzeiA9IGZ0ZWxsKGZwKTsgZnNlZWsoZnAsIDAsIFNFRUtfU0VUKTsKICBidWYgPSBtYWxsb2Moc3ogKyAxKTsgKHZvaWQpZnJlYWQoYnVmLCAxLCBzeiwgZnApOyBmY2xvc2UoZnApOyBidWZbc3pdPSdcMCc7CiAgY2hhciAqcCA9IGJ1ZjsKICB3aGlsZSAoKnApIHsKICAgIGNoYXIgKmUgPSBzdHJjaHIocCwgJ1xuJyk7IHNpemVfdCBsZW47IGNoYXIgKnM7CiAgICBpZiAoZSkgeyBsZW4gPSBlIC0gcDsgfSBlbHNlIHsgbGVuID0gc3RybGVuKHApOyB9CiAgICBzID0gbWFsbG9jKGxlbiArIDEpOyBtZW1jcHkocywgcCwgbGVuKTsgc1tsZW5dID0gJ1wwJzsKICAgIExpbmtEYXRhICpsZCA9IG1hbGxvYyhzaXplb2YoTGlua0RhdGEpKTsgbGQtPmRhdGEgPSBzOyBsZC0+bmV4dCA9IE5VTEw7CiAgICBpZiAodGFpbCkgdGFpbC0+bmV4dCA9IGxkOyBlbHNlIGhlYWQgPSBsZDsgdGFpbCA9IGxkOwogICAgaWYgKGUpIHAgPSBlICsgMTsgZWxzZSBicmVhazsKICB9CiAgZnJlZShidWYpOwogIHJldHVybiBoZWFkOwp9Cg==' | base64 -d > hosttools/shims.c
+          echo 'aW50IGxlYWtfZGV0ZWN0b3JfaGFzX3J1biA9IDA7CmNoYXIgZnJlZV9hZnRlcl9sZWFrX2RldGVjdGlvbl9tZXNzYWdlW10gPSAiRXJyb3I6IE5vdCBmcmVlZCBtZW1vcnkgYmxvY2tzLi4uIjsK' | base64 -d > hosttools/shims2.c
           BLIB=Blender-android_arm64/source/blender/blenlib
           gcc -w -I hostinc -I $BLIB -I $BLIB/intern -I Blender-android_arm64/intern/guardedalloc -I Blender-android_arm64/intern/atomic \
             Blender-android_arm64/source/blender/blentranslation/msgfmt/msgfmt.c \
