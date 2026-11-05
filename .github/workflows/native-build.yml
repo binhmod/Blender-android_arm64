@@ -109,9 +109,9 @@ jobs:
       - name: Build datatoc tools for host
         run: |
           mkdir -p hosttools
-          gcc source/blender/datatoc/datatoc.c -o hosttools/datatoc
-          gcc source/blender/datatoc/datatoc_icon.c -o hosttools/datatoc_icon -lpng -lm
-          ./hosttools/datatoc source/blender/datatoc/datatoc.c /tmp/_smoke.txt && wc -c /tmp/_smoke.txt
+          gcc Blender-android_arm64/source/blender/datatoc/datatoc.c -o hosttools/datatoc
+          gcc Blender-android_arm64/source/blender/datatoc/datatoc_icon.c -o hosttools/datatoc_icon -lpng -lm
+          ./hosttools/datatoc Blender-android_arm64/source/blender/datatoc/datatoc.c /tmp/_smoke.txt && wc -c /tmp/_smoke.txt
           echo host-datatoc-ok
 
       # ---- ARM64 full build ----
